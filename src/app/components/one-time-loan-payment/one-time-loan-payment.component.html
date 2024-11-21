@@ -1,0 +1,129 @@
+<form class="one-time-loan-payment" [formGroup]="formGroup" (submit)="formSubmit()">
+  <div class="form-input border-t-2 border-l-2 border-r-2 border-b-2">
+    <div class="p-2">
+      <label for="loanAccountNumber">
+        Loan Account Number *
+      </label>
+      <input type="text" id="loanAccountNumber" formControlName="loanAccountNumber" />
+    </div>
+    <div class="error p-1" *ngIf="formGroup.get('loanAccountNumber')?.touched && formGroup.get('loanAccountNumber')?.invalid">
+      Loan Account Number is required
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 ">
+    <div class="flex-auto">
+      <div class="form-input border-l-2 border-r-2 lg:border-r-0 p-2">
+        <label>
+          Type of Account *
+        </label>
+        <div class="flex content-center items-center">
+          <div class="flex content-center items-center radio-text-size mr-4">
+            <input type="radio" formControlName="typeOfAccount" id="checking" value="checking" />
+            <label for="checking">Checking</label>
+          </div>
+          <div class="flex content-center items-center radio-text-size">
+            <input type="radio"  formControlName="typeOfAccount" id="debit" value="debit" />
+            <label for="debit">Debit Card</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-input border-l-2 border-t-2 border-r-2 md:border-r-2 lg:border-r-0" *ngIf="formGroup.get('typeOfAccount')!.value == 'debit'">
+        <div class="p-2">
+          <label for="cardNumber">
+            Card Number *
+          </label>
+          <input type="text" id="cardNumber" formControlName="cardNumber" />
+        </div>
+        <div class="error p-1" *ngIf="formGroup.get('cardNumber')?.touched && formGroup.get('cardNumber')?.invalid">
+          Card Number is required
+        </div>
+      </div>
+      <div class="form-input border-l-2 border-t-2 border-r-2 md:border-r-2 lg:border-r-0" *ngIf="formGroup.get('typeOfAccount')!.value == 'debit'">
+        <div class="p-2">
+          <label for="nameOnCard">
+            Name On Card *
+          </label>
+          <input type="text" id="nameOnCard" formControlName="nameOnCard" />
+        </div>
+        <div class="error p-1" *ngIf="formGroup.get('nameOnCard')?.touched && formGroup.get('nameOnCard')?.invalid">
+          Name On Card is required
+        </div>
+      </div>
+      <!-- expirationDate -->
+      <div class="form-input border-l-2 border-t-2 border-r-2 md:border-r-2 lg:border-r-0" *ngIf="formGroup.get('typeOfAccount')!.value == 'debit'">
+        <div class="expirationDate">
+          <div class="p-2">
+            <label for="expirationDate">
+              Expiration Date *
+            </label>
+            <input type="month" id="expirationDate" [min]="minDate" formControlName="expirationDate" />
+            <!-- I know this doesn't by a lot browsers just did for quickness | test on chrome -->
+          </div>
+          <div class="error p-1" *ngIf="formGroup.get('expirationDate')?.touched && formGroup.get('expirationDate')?.invalid">
+            Expiration Date is required
+          </div>
+        </div>
+      </div>
+      <div class="form-input border-l-2 border-t-2  border-b-2 border-r-2 md:border-r-2 lg:border-r-0" *ngIf="formGroup.get('typeOfAccount')!.value == 'debit'">
+        <div class="p-2">
+          <label for="cvv">
+            CVV
+          </label>
+          <input type="number" id="cvv" formControlName="cvv" />
+        </div>
+        <div class="error p-1" *ngIf="formGroup.get('cvv')?.touched && formGroup.get('cvv')?.invalid">
+          CVV is required and must be a 3 digit number
+        </div>
+      </div>
+      <div class="form-input border-l-2 border-t-2 border-r-2 md:border-r-2 lg:border-r-0 xl:border-r-0 2xl:border-r-0 " *ngIf="formGroup.get('typeOfAccount')!.value == 'checking'">
+        <div class="p-2">
+          <label for="routingNumber">
+            Routing Number *
+          </label>
+          <input type="number" id="routingNumber" formControlName="routingNumber" />
+        </div>
+        <div class="error p-1" *ngIf="formGroup.get('routingNumber')?.touched && formGroup.get('routingNumber')?.invalid">
+          Routing Number is required and must be a 9 digit number
+        </div>
+      </div>
+      <div class="form-input border-l-2 border-t-2 border-r-2 md:border-r-2 lg:border-r-0 xl:border-r-0 2xl:border-r-0 " *ngIf="formGroup.get('typeOfAccount')!.value == 'checking'">
+        <div class="p-2">
+          <label for="accountNumber">
+            Bank Account Number *
+          </label>
+          <input type="text" id="accountNumber" formControlName="accountNumber" />
+        </div>
+        <div class="error p-1" *ngIf="formGroup.get('accountNumber')?.touched && formGroup.get('accountNumber')?.invalid">
+          Bank Account Number is required
+        </div>
+      </div>
+      <div class="form-input border-l-2 border-t-2 border-b-2 border-r-2 md:border-r-2 lg:border-r-0 xl:border-r-0 2xl:border-r-0 " *ngIf="formGroup.get('typeOfAccount')!.value == 'checking'">
+        <div class="p-2">
+          <label for="confirmAccountNumber">
+            Confirm Bank Account Number *
+          </label>
+          <input type="text" formControlName="confirmAccountNumber" />
+        </div>
+        <div class="error p-1" *ngIf="formGroup.get('confirmAccountNumber')?.touched && formGroup.get('confirmAccountNumber')?.value !== formGroup.get('accountNumber')?.value">
+          Bank Account Number does not match
+        </div>
+      </div>
+    </div>
+    <div class="flex-auto border-l-2 border-r-2 border-b-2 image-display justify-items-center content-center p-4">
+      <div *ngIf="formGroup.get('typeOfAccount')!.value == 'checking'" >
+        <div>Where can I find the routing and account number?</div>
+        <img src="assets/check.png" alt="credit card" />
+      </div>
+      <div *ngIf="formGroup.get('typeOfAccount')!.value == 'debit'" >
+        <div>Where can I find the CVV Number?</div>
+        <img src="assets/cvv.png" alt="bank" />
+      </div>
+    </div>
+  </div>
+  <br/>
+  <button type="submit"
+    class="bg-teal-600 text-white font-bold text-lg py-3 px-6 hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-300 w-full lg:w-1/3 2xl:w-1/4">
+    MAKE PAYMENT
+  </button>
+
+</form>

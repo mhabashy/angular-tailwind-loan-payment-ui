@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-tailwind-loan-payment-ui';
+
+  onSubmit(data: any) {
+    // can create any logic here
+    alert("Form Submitted Successfully; Check Console for Data");
+    console.log(data);
+  }
 }

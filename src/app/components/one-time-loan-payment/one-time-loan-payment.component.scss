@@ -1,0 +1,37 @@
+
+.form-input {
+  width: 100%;
+  font-size: 12px;
+
+  .error {
+    color: red;
+    background-color: rgb(250, 230, 233);
+    width: 100%;
+  }
+  .label {
+    margin: 10px;
+    padding: 10px;
+  }
+  input {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  input[type="radio"] {
+    margin-right: 5px;
+    margin: 10px;
+    width: 20px;
+  }
+
+}
+
+.radio-text-size {
+  font-size: 14px;
+}
+
+.image-display {
+  font-size: 14px;
+  font-weight: bolder;
+  background-color: rgb(244, 247, 252)
+}
