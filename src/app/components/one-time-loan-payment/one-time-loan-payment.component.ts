@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountTypes } from '../../enums/accountTypes';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,8 +15,8 @@ function removeNullValues<T extends Record<string, any>>(obj: T): ILoanPayment {
   templateUrl: './one-time-loan-payment.component.html',
   styleUrls: ['./one-time-loan-payment.component.scss']
 })
-export class OneTimeLoanPaymentComponent {
-  @Input() defaultTypeOfAccount: AccountTypes = AccountTypes.Checking;
+export class OneTimeLoanPaymentComponent implements OnInit, OnDestroy {
+  @Input() defaultTypeOfAccount: AccountTypes = AccountTypes.Checking; // giving option to set default
   formGroup: FormGroup;
 
   @Output() onSubmit: EventEmitter<ILoanPayment> = new EventEmitter<ILoanPayment>();
@@ -38,6 +38,9 @@ export class OneTimeLoanPaymentComponent {
       confirmAccountNumber: [null, [Validators.required]],
       routingNumber: [null, [Validators.required, Validators.pattern(/^\d{9}$/)]],
     });
+  }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
   }
 
   ngOnInit() {
